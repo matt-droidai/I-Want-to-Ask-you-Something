@@ -1,149 +1,191 @@
-<!DOCTYPE html><html lang="en">
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Be My Valentine ❤️</title>
-  <style>
-    body {
-      margin: 0;
-      height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: linear-gradient(135deg, #ff9a9e, #fad0c4);
-      font-family: 'Segoe UI', sans-serif;
-      overflow: hidden;
-    }
-    .hearts span {
-      position: absolute;
-      bottom: -20px;
-      font-size: 20px;
-      animation: float 8s linear infinite;
-      opacity: 0.8;
-    }
-    @keyframes float {
-      from { transform: translateY(0); opacity: 1; }
-      to { transform: translateY(-110vh); opacity: 0; }
-    }
-    .card {
-      background: white;
-      padding: 30px 40px;
-      border-radius: 20px;
-      box-shadow: 0 20px 40px rgba(0,0,0,0.15);
-      text-align: center;
-      max-width: 400px;
-      animation: pop 0.5s ease;
-      z-index: 2;
-    }
-    @keyframes pop {
-      from { transform: scale(0.8); opacity: 0; }
-      to { transform: scale(1); opacity: 1; }
-    }
-    h1 {
-      color: #ff4d6d;
-      font-size: 1.6rem;
-      margin-bottom: 20px;
-    }
-    .options {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 15px;
-      justify-content: center;
-    }
-    button {
-      border: none;
-      padding: 12px 20px;
-      border-radius: 25px;
-      font-size: 1rem;
-      cursor: pointer;
-      background: #ff4d6d;
-      color: white;
-      transition: transform 0.2s, background 0.2s;
-    }
-    button:hover {
-      transform: scale(1.05);
-      background: #e63b5d;
-    }
-    .no {
-      background: #999;
-      position: relative;
-    }
-    .spin-out {
-      animation: spinOut 3s forwards;
-    }
-    @keyframes spinOut {
-      to {
-        transform: translateX(1000px) rotate(720deg);
-        opacity: 0;
-      }
-    }
-  </style>
+<meta charset="UTF-8">
+<title>Be My Valentine ❤️</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body {
+  margin: 0;
+  height: 100vh;
+  background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+  font-family: 'Comic Sans MS', cursive;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+.container {
+  background: rgba(255,255,255,0.9);
+  padding: 30px;
+  border-radius: 20px;
+  text-align: center;
+  width: 90%;
+  max-width: 400px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+  z-index: 2;
+}
+
+h2 {
+  color: #ff3366;
+}
+
+button {
+  background: #ff3366;
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  margin: 10px;
+  border-radius: 30px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: transform 0.3s;
+}
+
+button:hover {
+  transform: scale(1.1);
+}
+
+.no-btn {
+  background: #444;
+}
+
+/* Floating hearts */
+.heart {
+  position: absolute;
+  color: rgba(255, 0, 100, 0.7);
+  font-size: 20px;
+  animation: float 6s linear infinite;
+  z-index: 1;
+}
+
+@keyframes float {
+  0% { transform: translateY(100vh); opacity: 1; }
+  100% { transform: translateY(-10vh); opacity: 0; }
+}
+
+/* Spin out No */
+.spin {
+  animation: spinOut 5s forwards;
+}
+
+@keyframes spinOut {
+  0% { transform: rotate(0deg); opacity: 1; }
+  100% { transform: rotate(1080deg) translateX(500px); opacity: 0; }
+}
+
+/* Fireworks */
+.firework {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  background: red;
+  border-radius: 50%;
+  animation: explode 1.5s forwards;
+}
+
+@keyframes explode {
+  0% { transform: scale(1); opacity: 1; }
+  100% { transform: scale(20); opacity: 0; }
+}
+</style>
 </head>
+
 <body>
-  <!-- Floating hearts -->
-  <div class="hearts"></div>
-  <div class="card" id="card">
-    <h1 id="question">Oii, Babe, do you want to know something? 💕</h1>
-    <div class="options" id="options">
-      <button onclick="next()">Yes</button>
-    </div>
-  </div>  <script>
-    let step = 0;
 
-    // floating hearts generator
-    const heartsContainer = document.querySelector('.hearts');
-    setInterval(() => {
-      const heart = document.createElement('span');
-      heart.innerHTML = '❤️';
-      heart.style.left = Math.random() * 100 + 'vw';
-      heart.style.animationDuration = (6 + Math.random() * 4) + 's';
-      heartsContainer.appendChild(heart);
-      setTimeout(() => heart.remove(), 9000);
-    }, 500);
+<div class="container" id="box">
+  <h2>Oii, Babe, do you want to know something?</h2>
+  <button onclick="next(2)">Yes</button>
+  <button onclick="next(2)">Ofc</button>
+</div>
 
-    function next() {
-      step++;
-      const q = document.getElementById('question');
-      const o = document.getElementById('options');
+<script>
+function next(step) {
+  const box = document.getElementById("box");
 
-      if (step === 1) {
-        q.innerHTML = 'I love you so much, Ann 😘❤️';
-        o.innerHTML = '<button onclick="next()">Really</button>';
-      }
-      else if (step === 2) {
-        q.innerHTML = 'Yep. Do you know how happy you make me? 🥰';
-        o.innerHTML = '<button onclick="next()">Maybe 😏</button>' +
-                      '<button onclick="next()">Ofc 😌</button>';
-      }
-        setTimeout(() => {
-          noBtn.classList.add('spin-out');
-        }, 300);
-      }
-    }
+  if (step === 2) {
+    box.innerHTML = `
+      <h2>I love you so much babe</h2>
+      <button onclick="next(3)">Really 😚</button>
+    `;
+  }
 
-    function yes() {
-      const q = document.getElementById('question');
-      const o = document.getElementById('options');
-      q.innerHTML = 'YAYYYY... SHE SAID YESSSS ❤️❤️❤️💖💘';
-      o.innerHTML = '<button onclick="screenshot()">Screenshot this moment 📸</button>';
-      launchConfetti();
-    }
+  if (step === 3) {
+    box.innerHTML = `
+      <h2>Yep. Do you know how happy you make me?</h2>
+      <button onclick="next(4)">Maybe 😏</button>
+      <button onclick="next(4)">I know 😌</button>
+    `;
+  }
 
-    function launchConfetti() {
-      for (let i = 0; i < 80; i++) {
-        const c = document.createElement('div');
-        c.className = 'confetti';
-        c.innerHTML = Math.random() > 0.5 ? '💖' : '💘';
-        c.style.left = Math.random() * 100 + 'vw';
-        c.style.animationDuration = (2 + Math.random() * 3) + 's';
-        document.body.appendChild(c);
-        setTimeout(() => c.remove(), 4000);
-      }
-    }
+  if (step === 4) {
+    box.innerHTML = `
+      <h2>Do you know you're my favourite person?</h2>
+      <button onclick="next(5)">Awww 😍</button>
+      <button onclick="next(5)">Really?</button>
+    `;
+  }
 
-    function screenshot() {
-      alert('Take a screenshot, Ann 💕 This moment is forever 😘');
-    }
+  if (step === 5) {
+    box.innerHTML = `
+      <h2>Yep. So would you babe make me the happiest person this Valentine's Day?</h2>
+      <button onclick="finalYes()">Ofcourse</button>
+      <button onclick="finalYes()">Yes</button>
+      <button class="no-btn" id="noBtn" onclick="noClicked()">No</button>
+    `;
 
-</script></body>
+    setTimeout(() => {
+      const noBtn = document.getElementById("noBtn");
+      if (noBtn) noBtn.classList.add("spin");
+    }, 1000);
+  }
+}
+
+function noClicked() {
+  const box = document.getElementById("box");
+  box.innerHTML = `
+    <h2>You can't say no bloody fool. It's only YES 😤❤️</h2>
+    <button onclick="finalYes()">YES</button>
+  `;
+}
+
+function finalYes() {
+  const box = document.getElementById("box");
+  box.innerHTML = `
+    <h2>YAYYYY... SHE SAID YESSSS 💖💖💖</h2>
+    <p>Thank you for being my Valentine 😘</p>
+  `;
+  launchFireworks();
+}
+
+/* Floating hearts */
+setInterval(() => {
+  const heart = document.createElement("div");
+  heart.className = "heart";
+  heart.innerHTML = "❤️";
+  heart.style.left = Math.random() * 100 + "vw";
+  heart.style.fontSize = Math.random() * 20 + 15 + "px";
+  document.body.appendChild(heart);
+  setTimeout(() => heart.remove(), 6000);
+}, 400);
+
+/* Fireworks effect */
+function launchFireworks() {
+  for (let i = 0; i < 20; i++) {
+    setTimeout(() => {
+      const firework = document.createElement("div");
+      firework.className = "firework";
+      firework.style.left = Math.random() * 100 + "vw";
+      firework.style.top = Math.random() * 100 + "vh";
+      firework.style.background = `hsl(${Math.random()*360},100%,60%)`;
+      document.body.appendChild(firework);
+      setTimeout(() => firework.remove(), 1500);
+    }, i * 150);
+  }
+}
+</script>
+
+</body>
 </html>
